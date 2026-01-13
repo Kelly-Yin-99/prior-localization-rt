@@ -10,12 +10,16 @@ binarization_value: null # threshold to binarize the target -> could be useful w
 shuffle: True
 balanced_weighting: True
 save_predictions: True
-hparam_grid: {}
+#hparam_grid: {}
+hparam_grid:
+alpha: [0.1, 1, 10, 100, 1000, 10000]
+
 imposter_df_path: null  # directory path; files should be named f'imposterSessions_{target}.pqt'
 
 # Neurometric curves config
 border_quantiles_neurometrics: [0.3, 0.7]  # [.3, .4, .5, .6, .7]
 compute_neuro_on_each_fold: False  # if True, expect a script that is 5 times slower
+
 
 # Regions config
 #     Specify the level of granularity at which decoding is done. Options are 'single_regions' (every region that is

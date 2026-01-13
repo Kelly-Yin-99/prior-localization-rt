@@ -1,0 +1,32 @@
+[
+  {
+    "eid": "3a3ea015-b5f4-4e8b-b189-9364d1fc7435",
+    "status": "skip_no_roi_or_failed",
+    "n_raw_trials": 401
+  },
+  {
+    "eid": "d85c454e-8737-4cba-b6ad-b2339429d99b",
+    "status": "skip_no_roi_or_failed",
+    "n_raw_trials": 413
+  },
+  {
+    "eid": "de905562-31c6-4c31-9ece-3ee87b97eab4",
+    "status": "skip_no_roi_or_failed",
+    "n_raw_trials": 401
+  },
+  {
+    "eid": "e6594a5b-552c-421a-b376-1a1baa9dc4fd",
+    "status": "skip_no_roi_or_failed",
+    "n_raw_trials": 401
+  },
+  {
+    "eid": "4e560423-5caf-4cda-8511-d1ab4cd2bf7d",
+    "status": "skip_no_roi_or_failed",
+    "n_raw_trials": 575
+  },
+  {
+    "eid": "56956777-dca5-468c-87cb-78150432cc57",
+    "status": "ok",
+    "n_raw_trials": 425
+  }
+]
