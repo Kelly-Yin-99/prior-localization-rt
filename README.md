@@ -3,7 +3,7 @@
 
 ## Prior Localization – RT Subgroup Extension
 
-This repository is a **research extension** of the original
+This repository is a **extension** of the original
 [prior-localization](https://github.com/int-brain-lab/prior-localization)
 repository by Findling, Hubert et al
 
