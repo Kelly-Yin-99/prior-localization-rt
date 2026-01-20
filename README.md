@@ -7,7 +7,7 @@ This repository is a **research extension** of the original
 [prior-localization](https://github.com/int-brain-lab/prior-localization)
 repository by the International Brain Laboratory (IBL).
 
-## Original paper**:  
+## Original paper:  
 Findling, Hubert et al. (2023), *Brain-wide representations of prior information in mouse decision-making*
 
 This fork modifies the original pipeline to perform **reaction-time (RT)–based subgroup analyses**
@@ -15,12 +15,13 @@ This fork modifies the original pipeline to perform **reaction-time (RT)–based
 
 ## What is different in this fork?
 
-Compared to the original IBL implementation, this repository adds:
+Compared to the original implementation, this repository adds:
 
   - RT-based trial stratification**
   - Trials are grouped into `fast`, `normal`, and `slow` based on custom reaction-time cutoffs
-  - RT is computed from wheel movement using custom preprocessing
+  - Reaction time is computed from wheel-velocity–based movement onset detection algotirhm in prior-localization/prior_localization/my_rt.py
   - Decoding is run separately for each RT subgroup
+  - Parallel processing across sessions
 
 
 All original model assumptions, decoding logic, and estimators remain unchanged unless explicitly stated.
