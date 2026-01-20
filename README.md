@@ -5,7 +5,7 @@
 
 This repository is a **research extension** of the original
 [prior-localization](https://github.com/int-brain-lab/prior-localization)
-repository by the International Brain Laboratory (IBL).
+repository by Findling, Hubert et al
 
 ## Original paper:  
 Findling, Hubert et al. (2023), *Brain-wide representations of prior information in mouse decision-making*
