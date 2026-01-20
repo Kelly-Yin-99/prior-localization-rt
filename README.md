@@ -73,7 +73,7 @@ If you run into any issues refer to the [ONE documentation](https://int-brain-la
 
 ## Running example code
 
-**ROI-based parallel decoding**: 
+**ROI-based decoding**: 
 
 
 The script  
