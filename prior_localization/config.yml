@@ -12,7 +12,7 @@ balanced_weighting: True
 save_predictions: True
 #hparam_grid: {}
 hparam_grid:
-alpha: [0.1, 1, 10, 100, 1000, 10000]
+alpha: [1e-4, 1e-3, 1e-2, 1e-1, 1, 10, 100, 1000, 10000, 100000]
 
 imposter_df_path: null  # directory path; files should be named f'imposterSessions_{target}.pqt'
 
