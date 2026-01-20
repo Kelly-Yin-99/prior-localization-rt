@@ -17,8 +17,7 @@ This fork modifies the original pipeline to perform **reaction-time (RT)–based
 
 Compared to the original implementation, this repository adds:
 
-  - RT-based trial stratification**
-  - Trials are grouped into `fast`, `normal`, and `slow` based on custom reaction-time cutoffs
+  - Reaction time-based trial stratification. Trials are grouped into `fast`, `normal`, and `slow` based on custom reaction-time cutoffs
   - Reaction time is computed from wheel-velocity–based movement onset detection algotirhm in prior-localization/prior_localization/my_rt.py
   - Decoding is run separately for each RT subgroup
   - Parallel processing across sessions
