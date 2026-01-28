@@ -203,7 +203,7 @@ To inspect the output for this run, use:
 
 ---
 
-To run RT subgroup decoding for **all sessions** in MOp, use:
+To run RT subgroup decoding for **all sessions**, use:
 
 `prior_localization/prior_localization/run_scripts/prior_encoding_subgroups_parallel.py`
 
