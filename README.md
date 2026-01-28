@@ -36,7 +36,7 @@ while preserving the decoding framework and model assumptions.
 5. **For each subgroup and session**
    - Compute:
      - Pearson correlation between decoded prior vs target (real, pseudo, corrected and Z-score)
-     - Real, pseudo and corrected 
+     - Real, pseudo and corrected R²
 
 ---
 
@@ -151,7 +151,7 @@ For each **session × ROI × RT subgroup**, the pipeline computes:
 
 - **Real Pearson correlation**
 
-- **Pseudo-session Pearson correlation**
+- **Pseudo Pearson correlation**
 
 - **z-scored Pearson correlation** : (r_real − mean(r_pseudo)) / std (r_pseudo)
 
