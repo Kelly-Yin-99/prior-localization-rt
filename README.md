@@ -6,13 +6,11 @@ This repository is an **extension** of the original
 repository by Findling, Hubert et al.(2023) *Brain-wide representations of prior information in mouse decision-making*
 
 
-## This repository extends the original decoding pipeline to perform reaction-time (RT)–based subgroup (fast / normal / slow group) analyses
+This repository extends the original decoding pipeline to perform reaction-time (RT)–based subgroup (fast / normal / slow group) analyses
 while preserving the decoding framework and model assumptions.
 ---
 
-## Conceptual overview
-
-The core goal of this extension is to ask:
+## The core goal of this extension is to ask:
 
 **Does the neural encoding strength of prior information differ across RT subgroups?**
 
