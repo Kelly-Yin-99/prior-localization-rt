@@ -185,6 +185,7 @@ To use this script:
    ```python
    ROI_LIST = ["MOp"]  # set to the ROI(s) you want to analyze, can be multiple e.g. ["MOp", "ACAd"]
 2. Specify session IDs
+   ```python
    eids = [
         "ae8787b1-4229-4d56-b0c2-566b61a25b77",
         # MOp example sessions
