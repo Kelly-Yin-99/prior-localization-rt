@@ -20,7 +20,6 @@ The core goal of this extension is to ask:
 > **Does neural encoding of prior information differ across reaction-time subgroups?**
 
 
-
 ## RT subgroup decoding pipeline
 
 
@@ -69,64 +68,6 @@ Compared to the original implementation, this repository adds:
 
 All original decoding logic, estimators, and assumptions remain unchanged unless explicitly stated.
 
----
-
-## Metrics reported
-
-For each **session × ROI × RT subgroup**, the pipeline computes:
-
-### Correlation-based metrics
-
-- **Real Pearson correlation**
-  \[
-  r_{\text{real}}
-  \]
-
-- **Pseudo-session distribution**
-  \[
-  r_{\text{pseudo}}^{(1..200)}
-  \]
-
-- **z-scored Pearson correlation**
-  \[
-  z = \frac{r_{\text{real}} - \mu(r_{\text{pseudo}})}{\sigma(r_{\text{pseudo}})}
-  \]
-
-- **Corrected Pearson correlation**
-  \[
-  r_{\text{corr}} = r_{\text{real}} - \mu(r_{\text{pseudo}})
-  \]
-
-### Variance-based metrics
-
-- **Real \(R^2\)**
-- **Pseudo-session \(R^2\) distribution**
-- **Corrected \(R^2\)**
-  \[
-  R^2_{\text{corr}} = R^2_{\text{real}} - \mu(R^2_{\text{pseudo}})
-  \]
-
-These metrics quantify **how strongly real neural encoding exceeds chance expectations**.
-
----
-
-## Regions of interest
-
-This extension focuses on regions where Findling et al. reported strong prior encoding:
-
-- MOp  
-- MOs  
-- ACAd  
-- ORBvl  
-
-Only sessions satisfying the following criteria are analyzed:
-
-- ≥ 401 total trials
-- ≥ 10 trials in each RT subgroup
-- Good spike-quality clusters
-- ≥ 10 units in the ROI
-
----
 
 ## Dependencies
 
@@ -184,6 +125,57 @@ one = ONE(base_url='https://openalyx.internationalbrainlab.org')
 ```
 
 If you run into any issues refer to the [ONE documentation](https://int-brain-lab.github.io/ONE/index.html)
+---
+
+
+
+## Regions of interest
+
+This extension focuses on regions where Findling et al. reported strong prior encoding:
+
+- MOp  
+- MOs  
+- ACAd  
+- ORBvl  
+
+Only sessions satisfying the following criteria are analyzed:
+
+- ≥ 401 total trials
+- ≥ 10 trials in each RT subgroup
+- Good spike-quality clusters
+- ≥ 10 units in the ROI
+
+---
+
+## Metrics reported
+
+For each **session × ROI × RT subgroup**, the pipeline computes:
+
+### Correlation-based metrics
+
+- **Real Pearson correlation**
+
+- **Pseudo-session Pearson correlation**
+
+- **z-scored Pearson correlation**
+  (r_real − mean(r_pseudo)) / std (r_pseudo)
+
+- **Corrected Pearson correlation**
+  r_real − mean(r_pseudo)
+  
+
+### Variance-based metrics
+
+- **Real R²**
+- **Pseudo R²**
+- **Corrected R²**
+- R²_real − mean(R²_pseudo)
+  
+
+These metrics quantify **how strongly real neural encoding exceeds chance expectations**.
+
+---
+
 
 ## Running example code
 
