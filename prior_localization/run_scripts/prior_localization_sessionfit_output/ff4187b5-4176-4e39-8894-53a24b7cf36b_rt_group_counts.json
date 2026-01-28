@@ -1,0 +1,14 @@
+{
+  "n_total": 872,
+  "n_valid_rt": 872,
+  "n_fast": 117,
+  "n_normal": 745,
+  "n_slow": 10,
+  "fast_thr": 0.08,
+  "slow_thr": 1.25,
+  "drop_last_n": 40,
+  "n_after_drop_last": 832,
+  "n_fast_after_drop_last": 116,
+  "n_normal_after_drop_last": 710,
+  "n_slow_after_drop_last": 6
+}

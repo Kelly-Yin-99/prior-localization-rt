@@ -1,0 +1,9 @@
+{
+  "n_total": 602,
+  "n_valid_rt": 602,
+  "n_fast": 96,
+  "n_normal": 478,
+  "n_slow": 28,
+  "fast_thr": 0.08,
+  "slow_thr": 1.25
+}

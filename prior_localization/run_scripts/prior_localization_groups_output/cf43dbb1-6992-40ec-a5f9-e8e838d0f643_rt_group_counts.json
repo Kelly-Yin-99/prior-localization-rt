@@ -3,5 +3,7 @@
   "n_valid_rt": 399,
   "n_fast": 11,
   "n_normal": 358,
-  "n_slow": 30
+  "n_slow": 30,
+  "fast_thr": 0.08,
+  "slow_thr": 1.25
 }

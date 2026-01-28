@@ -15,15 +15,10 @@ from iblatlas.atlas import AllenAtlas
 from brainbox.io.one import SessionLoader, SpikeSortingLoader
 from typing import Optional
 
-
-# =========================
-# USER CONFIG
-# =========================
-# Text file on the REMOTE machine
 TXT_PATH = "/Users/changyin/Downloads/session_ids_for_behav_analysis.txt"
 
 
-# Debug: only run first N sessions from the text file
+
 DEBUG_N_SESSIONS = 2   # set to None to run all
 
 BASE_DIR = Path(__file__).resolve().parents[1]

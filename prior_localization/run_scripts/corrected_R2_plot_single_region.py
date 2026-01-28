@@ -5,14 +5,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from pathlib import Path
-PKL_PATH = Path("prior_localization_groups_output/roii_summary_MOp.pkl")
+PKL_PATH = Path("prior_localization_groups_output/roi_summary_MOp.pkl")
 
 with open(PKL_PATH, "rb") as f:
     rows = pickle.load(f)
 
 df = pd.DataFrame(rows)
 
-ROI = "ACAd"
+ROI = "MOp"
 groups = ["fast", "normal", "slow"]
 
 df = df[df["region"] == ROI].copy()

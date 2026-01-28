@@ -1,0 +1,21 @@
+{
+  "n_total": 885,
+  "n_valid_rt": 885,
+  "n_fast": 78,
+  "n_normal": 755,
+  "n_slow": 52,
+  "fast_thr": 0.08,
+  "slow_thr": 1.25,
+  "drop_last_n": 40,
+  "n_after_drop_last": 845,
+  "n_fast_after_drop_last": 76,
+  "n_normal_after_drop_last": 746,
+  "n_slow_after_drop_last": 23,
+  "eid2pid_list": [
+    "[UUID('310c60b6-d68f-4018-a86a-3668ce296837'), UUID('06cb2ee3-0fb8-4ace-acbe-19c716f3ca40')]",
+    "['probe01', 'probe00']"
+  ],
+  "probe_picked": "['probe01', 'probe00']",
+  "worker_cache": "/Users/changyin/Documents/prior-localization/prior_localization/_local_ris_mirror_ONE_cache/worker_94767",
+  "one_version": "3.4.1"
+}

@@ -75,7 +75,7 @@ def prepare_ephys(
 
     # This allows us to just stage the data without running the analysis, we can then switch ONE in local mode
     if stage_only:
-        return None, None, None, None
+        return None, None, None, None, None
 
     # Prepare list of brain regions
     brainreg = BrainRegions()
@@ -96,6 +96,8 @@ def prepare_ephys(
     actual_regions = []
     n_units = []
     cluster_uuids_list = []
+    cluster_ids_list = []   # NEW: save actual cluster IDs used in decoding
+
     for region in regions:
         # find all clusters in region (where region can be a list of regions)
         region_mask = np.isin(beryl_regions, region)
@@ -106,33 +108,47 @@ def prepare_ephys(
             spike_mask = np.isin(spikes['clusters'], clusters[region_mask].index)
             times_masked = spikes['times'][spike_mask]
             clusters_masked = spikes['clusters'][spike_mask]
-            # record cluster uuids
-            idxs_used = np.unique(clusters_masked)
-            clusters_uuids = list(clusters.iloc[idxs_used]['uuids'])
+
+
+            idxs_used = np.unique(clusters_masked).astype(int)
+            cluster_ids_list.append(idxs_used.tolist())   # <-- NEW
+
+            clusters_uuids = None
+            try:
+                # clusters is a DataFrame with index=cluster IDs
+                if hasattr(clusters, "loc") and ("uuids" in clusters.columns):
+                    clusters_uuids = list(clusters.loc[idxs_used, 'uuids'])
+            except Exception:
+                clusters_uuids = None
+
+            cluster_uuids_list.append(clusters_uuids)
+
             # bin spikes from those clusters
             if binsize is None:
                 binned, _ = get_spike_counts_in_bins(
                     spike_times=times_masked, spike_clusters=clusters_masked, intervals=intervals)
                 binned = binned.T
             else:
-                # TODO: integrate this into `get_spike_counts_in_bins`
                 # update "intervals" to include more data to facilitate the lags
                 intervals_for_lags = np.copy(intervals)
                 intervals_for_lags[:, 0] = intervals_for_lags[:, 0] - n_bins_lag * binsize
+
                 # count spikes in multiple bins per interval
                 binned_2d, _ = get_spike_data_per_trial(
                     times=times_masked, clusters=clusters_masked, intervals=intervals_for_lags,
                     binsize=binsize, n_bins=n_bins + n_bins_lag,
                 )
+
                 # include lagged timepoints for each sample
                 binned = [build_lagged_predictor_matrix(b.T, n_bins_lag) for b in binned_2d]
 
             binned_spikes.append(binned)
             actual_regions.append(region)
             n_units.append(sum(region_mask))
-            cluster_uuids_list.append(clusters_uuids)
 
-    return binned_spikes, actual_regions, n_units, cluster_uuids_list
+
+    return binned_spikes, actual_regions, n_units, cluster_uuids_list, cluster_ids_list
+
 
 
 def prepare_motor(one, session_id, align_event='stimOn_times', time_window=(-0.6, -0.1), lick_bins=0.02):
@@ -202,7 +218,7 @@ def prepare_behavior(
         session_id, subject, trials_df, trials_mask,
         pseudo_ids=None, n_pseudo_sets=1, output_dir=None, model='optBay',
         target='pLeft', compute_neurometrics=False,
-        keep_idx=None,   # <-- NEW: indices of subgroup trials in the ORIGINAL trials_df
+        keep_idx=None,   # indices of subgroup trials in the ORIGINAL trials_df
 ):
     """
     Patched for subgroup decoding:
@@ -255,7 +271,7 @@ def prepare_behavior(
     if -1 in pseudo_ids:
         actual_target = compute_beh_target(trials_df, session_id, subject, model, target, behavior_path)
 
-        # IMPORTANT: do NOT trust compute_target_mask length; instead build a "full-space" mask safely
+
         # If target has NaNs, mask them out. Otherwise keep all trials eligible under trials_mask.
         actual_target = np.asarray(actual_target)
         if actual_target.shape[0] != n_trials_full:
@@ -371,7 +387,7 @@ def prepare_behavior(
 
             if all_neurometrics[set_i] is not None:
                 # neurometrics already masked & reset_index(drop=True), so slicing by keep_idx doesn't apply cleanly
-                # (it is in masked-space). safest: recompute neurometrics off for subgroup runs, or leave None.
+
                 pass
 
     return all_trials, all_targets, all_masks, all_neurometrics
@@ -535,3 +551,4 @@ def prepare_widefield_old(old_data, hemisphere, regions, align_event, frame_wind
             actual_regions.append(region)
 
     return data_epoch, actual_regions
+
