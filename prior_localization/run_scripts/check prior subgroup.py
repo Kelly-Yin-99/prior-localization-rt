@@ -1,72 +1,4 @@
-# import pickle
-# import numpy as np
-# import pandas as pd
-# from pathlib import Path
-#
-# pkl_path = Path("prior_localization_sessionfit_output/pearson_summary_MOs.pkl")
-#
-# with open(pkl_path, "rb") as f:
-#     rows = pickle.load(f)
-#
-# print("Type:", type(rows))
-# print("N rows:", len(rows))
-# print("Keys example:", list(rows[0].keys()))
-#
-# df = pd.DataFrame(rows)
-#
-# # r_fake is an array in each row; make it easier to view
-# df["r_fake_mean_check"] = df["r_fake"].apply(lambda x: float(np.mean(x)) if isinstance(x, (list, np.ndarray)) and len(x) else np.nan)
-# df["r_fake_std_check"]  = df["r_fake"].apply(lambda x: float(np.std(x, ddof=1)) if isinstance(x, (list, np.ndarray)) and len(x) > 1 else np.nan)
-#
-# # show the main columns
-# cols = ["eid", "subject", "roi", "group", "n_trials_group_used", "r_real", "r_fake_mean", "r_fake_std", "z_corr", "p_emp"]
-# print(df[cols].sort_values(["eid", "group"]).to_string(index=False))
-#
-# # Print nice subgroup summaries pooled across sessions
-# print("\n=== Subgroup summary across sessions ===")
-# print(df.groupby("group")[["n_trials_group_used","r_real","z_corr","p_emp"]].agg(["count","mean","median"]).to_string())
 
-# # inspect_pearson_outputs.py
-# import json
-# import pickle
-# from pathlib import Path
-# import numpy as np
-#
-# pkl_path = Path("prior_localization_sessionfit_output/pearson_summary_MOs.pkl")
-# log_path = Path("prior_localization_sessionfit_output/run_log_MOs.json")
-#
-# # ---- run log ----
-# print("=== RUN LOG ===")
-# run_log = json.loads(log_path.read_text())
-# for r in run_log:
-#     print(r)
-#
-# # ---- pearson summary ----
-# print("\n=== PEARSON SUMMARY (rows) ===")
-# with open(pkl_path, "rb") as f:
-#     rows = pickle.load(f)
-#
-# print("Type:", type(rows), "| N rows:", len(rows))
-# print("Keys:", sorted(rows[0].keys()))
-#
-# # print nicely per session
-# rows_sorted = sorted(rows, key=lambda x: (x["eid"], x["group"]))
-# for row in rows_sorted:
-#     eid = row["eid"]
-#     grp = row["group"]
-#     n = row["n_trials_group_used"]
-#     r_real = row["r_real"]
-#     z = row["z_corr"]
-#     p = row["p_emp"]
-#     rf_mu = row["r_fake_mean"]
-#     rf_sd = row["r_fake_std"]
-#
-#     print(
-#         f"{eid} | {grp:6s} | n={n:4d} | r_real={r_real: .4f} | "
-#         f"r_fake={rf_mu: .4f}±{rf_sd: .4f} | z={z: .3f} | p_emp={p: .4f}"
-#     )
-
-# inspect_pearson_outputs.py
 import json
 import pickle
 from pathlib import Path
@@ -90,13 +22,13 @@ def _fmt(x, nd=4):
 def _fmt_pm(mu, sd, nd=4):
     return f"{_fmt(mu, nd)}±{_fmt(sd, nd)}"
 
-# ---- run log ----
+
 print("=== RUN LOG ===")
 run_log = json.loads(log_path.read_text())
 for r in run_log:
     print(r)
 
-# ---- summary rows ----
+
 print("\n=== SUMMARY (rows) ===")
 with open(pkl_path, "rb") as f:
     rows = pickle.load(f)
@@ -104,7 +36,7 @@ with open(pkl_path, "rb") as f:
 print("Type:", type(rows), "| N rows:", len(rows))
 print("Keys:", sorted(rows[0].keys()))
 
-# print nicely per session
+
 rows_sorted = sorted(rows, key=lambda x: (x.get("eid", ""), x.get("group", "")))
 
 print("\n=== PER-SESSION / PER-GROUP ===")

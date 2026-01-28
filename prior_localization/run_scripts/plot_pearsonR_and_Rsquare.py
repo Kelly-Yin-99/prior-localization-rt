@@ -1,5 +1,4 @@
 
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -20,6 +19,7 @@ GROUP_ORDER = ["fast", "normal", "slow"]
 
 METRICS = [
     ("r_real", "Pearson r (real)", "all_rois_pearson_r_real_sig_n.pdf"),
+    ("r_corr", "Corrected Pearson r = r_real − mean(r_pseudo)", "all_rois_pearson_r_corr_sig_n.pdf"),
     ("z_corr", r"z = (r_real − mean(r_pseudo)) / std(r_pseudo)", "all_rois_z_corr_sig_n_eq.pdf"),
     ("r2_corr", "Corrected R²", "all_rois_r2_corr_sig_n.pdf"),
 ]
@@ -50,7 +50,7 @@ df = pd.DataFrame(rows)
 print("Loaded:", PEARSON_SUMMARY_PKL)
 print("Columns:", df.columns.tolist())
 
-required = ["roi", "group", "r_real", "z_corr", "r2_corr"]
+required = ["roi", "group", "r_real", "r_fake_mean", "r_fake_std", "z_corr", "r2_corr"]
 for c in required:
     if c not in df.columns:
         raise RuntimeError(f"Missing column '{c}'")
@@ -58,15 +58,16 @@ for c in required:
 df["roi"] = df["roi"].astype(str)
 df["group"] = pd.Categorical(df["group"], categories=GROUP_ORDER, ordered=True)
 
-# coerce numerics
-for col in ["r_real", "z_corr", "r2_corr"]:
+for col in ["r_real", "r_fake_mean", "r_fake_std", "z_corr", "r2_corr"]:
     df[col] = pd.to_numeric(df[col], errors="coerce")
+
+df["r_corr"] = df["r_real"] - df["r_fake_mean"]
 
 rois = sorted(df["roi"].dropna().unique())
 print("ROIs:", rois)
 
 
-summary_cols = ["r_real", "z_corr", "r2_corr"]
+summary_cols = ["r_real", "r_corr", "z_corr", "r2_corr"]
 summary = (
     df.groupby(["roi", "group"], observed=True)[summary_cols]
       .agg(["count", "mean", "median", "std"])
@@ -176,10 +177,10 @@ def add_n_labels(ax, vals_by_group):
         n = len(vals_by_group[g])
         ax.text(j, y_n, f"n={n}", ha="center", va="bottom", fontsize=9)
 
-
     top = y_max + max(N_LABEL_PAD_FRAC + 0.22, 0.35) * yr
     cur_lo, cur_hi = ax.get_ylim()
     ax.set_ylim(cur_lo, max(cur_hi, top))
+
 
 def plot_metric(metric: str, ylabel: str, out_pdf: Path):
     if metric not in df.columns:
@@ -196,7 +197,7 @@ def plot_metric(metric: str, ylabel: str, out_pdf: Path):
         )
         axes = np.array(axes).reshape(-1)
 
-        rng = np.random.default_rng(0)  #
+        rng = np.random.default_rng(0)
 
         for i, roi in enumerate(rois):
             ax = axes[i]
@@ -215,7 +216,6 @@ def plot_metric(metric: str, ylabel: str, out_pdf: Path):
                 widths=0.6, showfliers=False
             )
 
-            # scatter with jitter
             for j, v in enumerate(data, start=1):
                 if len(v):
                     ax.scatter(
@@ -236,14 +236,12 @@ def plot_metric(metric: str, ylabel: str, out_pdf: Path):
         fig.suptitle(f"{ylabel} by RT group", fontsize=14, y=0.995)
         fig.text(0.01, 0.5, ylabel, va="center", rotation="vertical", fontsize=12)
 
-        # slightly more top margin
         fig.tight_layout(rect=[0.03, 0.02, 1, 0.965])
 
         pdf.savefig(fig)
         plt.close(fig)
 
     print("Saved:", out_pdf)
-
 
 
 for col, ylabel, fname in METRICS:
