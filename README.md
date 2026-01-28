@@ -2,9 +2,7 @@
 ## Prior Localization – RT Subgroup Extension
 
 This repository is an **extension** of the original  
-[prior-localization](https://github.com/int-brain-lab/prior-localization)  
-repository by Findling, Hubert et al.(2023) *Brain-wide representations of prior information in mouse decision-making*
-
+[prior-localization](https://github.com/int-brain-lab/prior-localization) repository by Findling, Hubert et al.(2023) *Brain-wide representations of prior information in mouse decision-making*
 
 This repository extends the original decoding pipeline to perform reaction-time (RT)–based subgroup (fast / normal / slow group) analyses
 while preserving the decoding framework and model assumptions.
