@@ -121,8 +121,8 @@ one = ONE(base_url='https://openalyx.internationalbrainlab.org')
 ```
 
 If you run into any issues refer to the [ONE documentation](https://int-brain-lab.github.io/ONE/index.html)
----
 
+---
 
 
 ## Regions of interest
